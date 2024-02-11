@@ -1,12 +1,12 @@
-{ self, config, lib, pkgs, ... }:
-{
+{ self, config, lib, pkgs, ... }: {
   security.acme = {
     acceptTerms = true;
     defaults = {
       email = "wes+barn-acme@jupiterbroadcasting.com";
       dnsProvider = "cloudflare";
       # location of your CLOUDFLARE_DNS_API_TOKEN=[value]
-      environmentFile = "/etc/nixos/certs.secret";
+      # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#EnvironmentFile=
+      environmentFile = "/REPLACE/WITH/YOUR/PATH";
     };
   };
   services = {
@@ -14,7 +14,7 @@
       "YOUR.DOMAIN.NAME" = {
         forceSSL = true;
         enableACME = true;
-    acmeRoot = null;
+        acmeRoot = null; # Use DNS challenge.
       };
     };
     nextcloud = {
@@ -35,12 +35,13 @@
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
         inherit calendar contacts notes onlyoffice tasks cookbook qownnotesapi;
-    # Custom app example.
-    socialsharing_telegram = pkgs.fetchNextcloudApp rec {
-      url = "https://github.com/nextcloud-releases/socialsharing/releases/download/v3.0.1/socialsharing_telegram-v3.0.1.tar.gz";
-      license = "agpl3";
-      sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
-    };
+        # Custom app example.
+        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
+          url =
+            "https://github.com/nextcloud-releases/socialsharing/releases/download/v3.0.1/socialsharing_telegram-v3.0.1.tar.gz";
+          license = "agpl3";
+          sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
+        };
       };
       config = {
         overwriteProtocol = "https";
@@ -49,6 +50,7 @@
         adminuser = "admin";
         adminpassFile = "/REPLACE/WITH/YOUR/PATH";
       };
+      # Suggested by Nextcloud's health check.
       phpOptions."opcache.interned_strings_buffer" = "16";
     };
     postgresqlBackup = {
