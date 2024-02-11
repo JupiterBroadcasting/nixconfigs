@@ -50,7 +50,7 @@
       };
       phpOptions."opcache.interned_strings_buffer" = "16";
     };
-    postgresqlBackupWes = {
+    postgresqlBackup = {
       enable = true;
       startAt = "*-*-* 01:15:00";
     };
