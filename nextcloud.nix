@@ -5,7 +5,7 @@
     defaults = {
       email = "wes+barn-acme@jupiterbroadcasting.com";
       dnsProvider = "cloudflare";
-      environmentFile = "/etc/nixos/certs.secret";
+      environmentFile = "/etc/nixos/certs.secret"; # location of your CLOUDFLARE_DNS_API_TOKEN=[value]
     };
   };
   services = {
