@@ -5,7 +5,8 @@
     defaults = {
       email = "wes+barn-acme@jupiterbroadcasting.com";
       dnsProvider = "cloudflare";
-      environmentFile = "/etc/nixos/certs.secret"; # location of your CLOUDFLARE_DNS_API_TOKEN=[value]
+      # location of your CLOUDFLARE_DNS_API_TOKEN=[value]
+      environmentFile = "/etc/nixos/certs.secret";
     };
   };
   services = {
@@ -19,7 +20,7 @@
     nextcloud = {
       enable = true;
       hostName = "YOUR.DOMAIN.NAME";
-       # Need to manually increment with every major upgrade.
+      # Need to manually increment with every major upgrade.
       package = pkgs.nextcloud28;
       # Let NixOS install and configure the database automatically.
       database.createLocally = true;
