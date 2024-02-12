@@ -1,4 +1,5 @@
 { self, config, lib, pkgs, ... }: {
+  # Based on https://carjorvaz.com/posts/the-holy-grail-nextcloud-setup-made-easy-by-nixos/
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -14,9 +15,11 @@
       "YOUR.DOMAIN.NAME" = {
         forceSSL = true;
         enableACME = true;
-        acmeRoot = null; # Use DNS challenge.
+        # Use DNS Challenege.
+        acmeRoot = null;
       };
     };
+    # 
     nextcloud = {
       enable = true;
       hostName = "YOUR.DOMAIN.NAME";
@@ -26,7 +29,7 @@
       database.createLocally = true;
       # Let NixOS install and configure Redis caching automatically.
       configureRedis = true;
-      # Increase the maximum file upload size to avoid problems uploading videos.
+      # Increase the maximum file upload size.
       maxUploadSize = "16G";
       https = true;
       autoUpdateApps.enable = true;
@@ -53,6 +56,7 @@
       # Suggested by Nextcloud's health check.
       phpOptions."opcache.interned_strings_buffer" = "16";
     };
+    # Nightly database backups.
     postgresqlBackup = {
       enable = true;
       startAt = "*-*-* 01:15:00";
