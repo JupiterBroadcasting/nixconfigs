@@ -46,9 +46,11 @@
           sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
         };
       };
-      config = {
+      settings = {
         overwriteProtocol = "https";
-        defaultPhoneRegion = "US";
+        default_phone_region = "US";
+      };
+      config = {
         dbtype = "pgsql";
         adminuser = "admin";
         adminpassFile = "/REPLACE/WITH/YOUR/PATH";
